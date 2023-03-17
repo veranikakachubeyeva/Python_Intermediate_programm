@@ -1,21 +1,20 @@
 from collections import Counter
 import sys
+import codecs
 
 
 filePath = sys.argv[1]
 
-#print(filePath)
-#print('cmd entry:', sys.argv)
+
 f = open(filePath, "rb")
-#f = io.open(filePath, "r")  #, encoding='utf-8')
-
 d = f.read()
-#print(d)
-
-counter = dict(Counter(d).most_common(10))
+text = codecs.decode(d, "utf8", errors="ignore")
+counter = dict(Counter(text).most_common(10))
 print("COUNTER", counter)
 
 for key in counter:
-    print(key, "=>", counter[key], "times")
+    print(str(key.encode("utf8"))[1:], "=>", counter[key], "times")
+    #print(len(str(key.encode("utf8"))[1:]))
+
 
 f.close()
