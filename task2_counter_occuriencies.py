@@ -4,7 +4,7 @@
 import sys
 
 
-def  open_file(file):
+def  get_data_from_file(file):
     if len(file) != 2:
         print ("Usage: python pythonfile.py textfile.txt")
         sys.exit()
@@ -18,48 +18,39 @@ def  open_file(file):
 
 def count_occuriencies (input_data):
     if len(input_data)==0:
-        return set()
+        notification = "File is empty"
+        return  notification
     
     
-    max_count = 0
-    current_count = 0
-    current_byte_element = input_data[0]
     list_of_seq = []
-    result_statment = set()
+    result_statment = set() 
+    max_len = 1
+    current_len = 0 
+    current_char = input_data[0]
+    
+    
+    for item in input_data:
+        if item == current_char:
+            current_len += 1
+            max_len = current_len
+        else:
+            if current_len > 0:
+                    
+                if max_len < current_len:
+                    max_len = current_len 
+                list_of_seq.append((chr(current_char), current_len))     
+                
+            current_len = 1
+            current_char = item
+    
+   
+    list_of_seq.append((chr(current_char), current_len))
     
         
-    for index in range(len(input_data)):
-        if (input_data[index] == current_byte_element):
-                current_count += 1        
-                
-        if (input_data[index] != current_byte_element) or ((current_byte_element == input_data[index]) and (index == len(input_data)-1)):
-            
-            if current_count > 0:
-                    
-                if max_count < current_count:
-                    max_count = current_count                   
-                       
-                list_of_seq.append((chr(current_byte_element), current_count))
-            current_byte_element = input_data[index] 
-            current_count = 1
-            
-            
-        if (current_byte_element == input_data[index]) and (index == len(input_data)-1):
-            
-            if current_count > 0:
-                    
-                if max_count < current_count:
-                    max_count = current_count                    
-                       
-                list_of_seq.append((chr(current_byte_element), current_count))
-            current_byte_element = input_data[index] 
-            current_count = 1
-               
-            
-    result = list(filter(lambda x: x[1] == max_count, list_of_seq))    
+    result = list(filter(lambda x: x[1] == max_len, list_of_seq))   
+    
     
     for  el in result:
         result_statment.add(el)
                   
     return result_statment
-  

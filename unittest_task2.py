@@ -16,7 +16,7 @@ class TestCounterOfOccuriencies(unittest.TestCase):
             self.assertEqual(count_occuriencies(b"abbbbbbbcbbbbbbbd"), {('b', 7)})
     
     def test_occuriencies_empty_file(self):
-            self.assertEqual(count_occuriencies(b""), set())
+            self.assertEqual(count_occuriencies(b""), "File is empty")
 
     def test_occuriencies_one_symbol(self):
             self.assertEqual(count_occuriencies(b"a"), {('a', 1)})
@@ -24,8 +24,13 @@ class TestCounterOfOccuriencies(unittest.TestCase):
     def test_occuriencies_two_symbols(self):
             self.assertEqual(count_occuriencies(b"a "), {(" ", 1), ('a', 1)})
             
-    def test_occuriencies_two_symbols(self):
-            self.assertEqual(count_occuriencies(b"acd"), {('c', 1), ('a', 1), ('d', 1)})        
+    def test_occuriencies_several_symbols(self):
+            self.assertEqual(count_occuriencies(b"acd"), {('c', 1), ('a', 1), ('d', 1)})   
+    
+    def test_occuriencies_several_same_symbols(self):
+            self.assertEqual(count_occuriencies(b"aaa"), {('a', 3)})
+    
+    {('q', 3)}     
 
 if __name__ == '__main__':
     unittest.main()    
