@@ -18,8 +18,7 @@ def  get_data_from_file(file):
 
 def count_occuriencies (input_data):
     if len(input_data)==0:
-        notification = "File is empty"
-        return  notification
+        return None
     
     
     list_of_seq = []

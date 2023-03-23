@@ -16,7 +16,7 @@ class TestCounterOfOccuriencies(unittest.TestCase):
             self.assertEqual(count_occuriencies(b"abbbbbbbcbbbbbbbd"), {('b', 7)})
     
     def test_occuriencies_empty_file(self):
-            self.assertEqual(count_occuriencies(b""), "File is empty")
+            self.assertEqual(count_occuriencies(b""), None)
 
     def test_occuriencies_one_symbol(self):
             self.assertEqual(count_occuriencies(b"a"), {('a', 1)})
