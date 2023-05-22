@@ -11,7 +11,7 @@ class Example1:
         if attrname == 'hello':
             return 'hello world'
         else:
-            return object.__getattribute__(self, attrname)
+            return super(Example1, self).__getattribute__(attrname)
                  
     def __getattr__(self, attrname):
         if attrname == "love":
