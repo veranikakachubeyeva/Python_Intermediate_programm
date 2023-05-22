@@ -15,15 +15,16 @@ class Example1:
                  
     def __getattr__(self, attrname):
         if attrname == "love":
-            return print("love you")
+            print("love you")
+            return "love you"
         else:
             return None
         
     def __setattr__(self, attrname, value):
-        if attrname == 'name':            
-            self.__dict__[attrname] = "pupkin"
+        if attrname == 'vasia':            
+            self.__dict__["name"] = "pupkin"
         else:            
-            self.__dict__[attrname] = value
+            self.__dict__["name"] = value
         
         
 obj = Example1()
@@ -40,6 +41,11 @@ print(obj.love)
 print("//////////////////////////////////////")
 
 
+obj.vasia = "NeVasia"
+print(obj.vasia)
 print(obj.name)
-obj.name = "NAME"
+print(dir(obj))
+
+obj.petya = "PETYA"
 print(obj.name)
+print(dir(obj))
