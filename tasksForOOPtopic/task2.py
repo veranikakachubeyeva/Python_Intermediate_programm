@@ -2,34 +2,29 @@
 # ( for example, method fun_1() in A should be moved to fun_1() in B and vice versa, etc). Test your program 
 
 
-def example2(class1, class2):
-    methods1 = [method for method in dir(class1) if method.startswith('fun_')]
-    method1_value = []    
-    for meth in dir(class1):
-        if meth.startswith('fun_'):
-            method1_value.append(getattr(class1, meth))
-            delattr(class1, meth)
-    print(method1_value)
-    print(methods1)
-     
-        
-    methods2 = [method for method in dir(class2) if method.startswith('fun_')]
-    method2_value = []     
-    for meth in dir(class2):
-        if meth.startswith('fun_'):
-            method2_value.append(getattr(class2, meth))
-            delattr(class2, meth)
-    print(method2_value)
-    print(methods2)    
+def example2(class1, class2):    
+    methods1 = [method for method in class1.__dict__ if method.startswith('fun_')]    
+    methods2 = [method for method in class2.__dict__ if method.startswith('fun_')]    
     
-         
-    for el in methods1:
-        for val in method1_value:
-            setattr(class2, el, val)
+    
+    def del_attr(meth, cls): 
+        method_value = []
+        for meth in meth:
+            method_value.append(getattr(cls, meth))
+            delattr(cls, meth)     
+        return method_value
+    
+    method1_value = del_attr(methods1, class1) 
+    method2_value = del_attr(methods2, class2)
+       
+      
+    def set_attr(meth, meth_val, cls):
+        for el in meth:
+            for val in meth_val:
+                setattr(cls, el, val)
         
-    for el in methods2:
-        for val in method2_value:
-            setattr(class1, el, val)
+    set_attr(methods1, method1_value, class2)
+    set_attr(methods2, method2_value, class1)
      
     
     return class1, class2
@@ -48,11 +43,32 @@ class B:
     def fun_b1():
         print("class b1")
         
-example2(A, B) 
+class C(A):
+    pass
+        
+
+#example2(A, B)
+
+example2(C, B) 
+
+print("dir C")
+print(dir(C))
+
+print("dict C") 
+print(C.__dict__)
+
+print("dir B")
+print(dir(B)) 
+
+print("dict B") 
+print(B.__dict__)
 
 
+
+print("dir A")
 print(dir(A))       
 
+print("dir B")
 print(dir(B))  
 
-print(A.fun_b)     
+#print(A.fun_b)     
