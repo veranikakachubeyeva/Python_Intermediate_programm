@@ -4,14 +4,17 @@
 
 def example2(class1, class2):   
    
-    class1_methods = {method: getattr(class1, method) for method in class1.__dict__ if method.startswith('fun_')}
-    class2_methods = {method: getattr(class2, method) for method in class2.__dict__ if method.startswith('fun_')}
+    class1_methods = {method: val for (method, val) in class1.__dict__.items() if method.startswith('fun_')}
+    class2_methods = {method: val for (method, val) in class2.__dict__.items() if method.startswith('fun_')}
+      
     
-    
-    for method in class1_methods.keys():
-        setattr(class2, method, class1_methods[method])
-    for method in class2_methods.keys():
-        setattr(class1, method, class2_methods[method])
+    def swap_attr(clsA, cls_meth, clsB):
+        for method in cls_meth.keys():
+            setattr(clsB, method, cls_meth[method])
+            delattr(clsA, method)
+        
+    swap_attr(class1, class1_methods, class2)    
+    swap_attr(class2, class2_methods, class1)
     
     return class2, class1
         
