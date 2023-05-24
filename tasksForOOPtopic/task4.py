@@ -3,28 +3,39 @@
 # For example instance.attr value is 5, so "attr = 5" will be defined in global scope and can be accessed globally in module. Test your program 
 
 def example4(obj):
-    instance_attrs = dir(obj)
-    instance_non_magic_attrs = [attr for attr in instance_attrs if not attr.startswith('__') and not attr.endswith('__')]
-    
-    print(instance_non_magic_attrs)    
-          
-    for item in instance_non_magic_attrs:                 
-            globals()[item] = getattr(obj, item)       
+        
+    instance_non_magic_attrs_dir = [attr for attr in dir(obj) if not attr.startswith('__') and not attr.endswith('__')]       
+         
+    for item in instance_non_magic_attrs_dir:                 
+            globals()[item] = getattr(obj, item)
 
 
-class A:
+
+class C:
+    age = 1000000
+    pass
+
+
+class A(C):
     def fun_a():
         print("class a")
     def fun_a1():
         print("class a1")
 
-
 a = A()
-a.name = "task4"
+
+print(a.age)
+print(a.__dict__)
+a.nameA = "task4"
         
 example4(a)
 
-print(name)
+print(type(nameA))
+
+print(f"global variable {nameA}")
+print(f"global age {age}")
+
+
 print(globals())
-print(fun_a)
-print(fun_a1)
+print((fun_a))
+
