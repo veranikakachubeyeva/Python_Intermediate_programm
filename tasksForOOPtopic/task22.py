@@ -4,22 +4,30 @@
 
 def example2(class1, class2):   
    
-    class1_methods = {method: val for (method, val) in class1.__dict__.items() if method.startswith('fun_')}
-    class2_methods = {method: val for (method, val) in class2.__dict__.items() if method.startswith('fun_')}
+    class1_methods = {method : val for (method, val) in class1.__dict__.items() if method.startswith('fun_') if str(val).startswith('<function')}
+    class2_methods = {method: val for (method, val) in class2.__dict__.items() if method.startswith('fun_') if str(val).startswith('<function')}
       
-    
-    def swap_attr(clsA, cls_meth, clsB):
-        for method in cls_meth.keys():
-            setattr(clsB, method, cls_meth[method])
-            delattr(clsA, method)
+    #def swap_attr(clsA, cls_meth, clsB):
+        #for method in cls_meth.keys():
+            #setattr(clsB, method, cls_meth[method])
+            #delattr(clsA, method)
         
-    swap_attr(class1, class1_methods, class2)    
-    swap_attr(class2, class2_methods, class1)
+    #swap_attr(class1, class1_methods, class2)    
+    #swap_attr(class2, class2_methods, class1)
+    
+    for method in class1_methods.keys():
+        setattr(class2, method, class1_methods[method])
+        delattr(class1, method)
+    for method in class2_methods.keys():
+        setattr(class1, method, class2_methods[method])
+        delattr(class2, method)
+
     
     return class2, class1
         
         
 class A:
+    fun_atrr = 100
     def fun_a():
         print("class a")
     def fun_a1():
