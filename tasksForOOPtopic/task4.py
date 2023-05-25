@@ -24,18 +24,13 @@ class A(C):
 
 a = A()
 
-print(a.age)
-print(a.__dict__)
+
 a.nameA = "task4"
         
 example4(a)
 
-print(type(nameA))
 
-print(f"global variable {nameA}")
-print(f"global age {age}")
-
-
-print(globals())
-print((fun_a))
-
+assert nameA == "task4", "variable nameA is not in a global scope" 
+assert age == 1000000, "variable age is not in a global scope" 
+assert fun_a, "function fun_a is not in a global scope"
+assert fun_a1, "function fun_a1 is not in a global scope"
