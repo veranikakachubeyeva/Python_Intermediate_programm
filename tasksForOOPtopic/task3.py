@@ -7,7 +7,7 @@ def example3(obj):
     class_non_magic_attrs = [attr for attr in obj.__class__.__dict__ if not attr.startswith('__') and not attr.endswith('__')]
        
     
-    return len(instance_non_magic_attrs),  len(class_non_magic_attrs)
+    return  len(instance_non_magic_attrs),  len(class_non_magic_attrs)
 
 
 
@@ -27,25 +27,14 @@ a.name = "task3"
 b = B()  
 
 
-assert example3(b) and isinstance(example3(b), tuple), \
+assert  isinstance(example3(b), tuple), \
     f"result is not a tuple: {example3(b)}"
 
-assert example3(a) and isinstance(example3(a), tuple), \
+assert  isinstance(example3(a), tuple), \
     f"result is not a tuple: {example3(a)}"   
     
-assert example3(b) and example3(a)[0]>=0 and example3(a)[1]>=0, \
-    f"result is less than 0, expected : {example3(a)}"
+assert  example3(a)[0]>=0 and example3(a)[1]>=0, \
+    "result is less than 0"
 
-assert example3(b) and example3(b)[0]>=0 and example3(b)[1]>=0, \
-    f"result is less than 0, expected : {example3(b)}" 
-    
-assert example3(b) and example3(a)[0]<0 and example3(a)[1]<0, \
-    f"result is not ok, expected : {example3(a)}"
-
-assert example3(b) and example3(b)[0]<0 and example3(b)[1]<0, \
-    f"result is not ok, expected : {example3(b)}"
-
-     
-#print(example3(b))
-
-#print(example3(a))
+assert example3(b)[0]>=0 and example3(b)[1]>=0, \
+    "result is less than 0" 
