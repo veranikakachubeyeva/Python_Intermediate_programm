@@ -4,9 +4,9 @@
 
 def example2(class1, class2):   
    
-    class1_methods = {method : val for (method, val) in class1.__dict__.items() if method.startswith('fun_') if str(val).startswith('<function')}
-    class2_methods = {method: val for (method, val) in class2.__dict__.items() if method.startswith('fun_') if str(val).startswith('<function')}
-      
+    class1_methods = {method : val for (method, val) in class1.__dict__.items() if method.startswith('fun_') and callable(getattr(class1, method))}
+    class2_methods = {method: val for (method, val) in class2.__dict__.items() if method.startswith('fun_') and callable(getattr(class2, method))}
+          
     #def swap_attr(clsA, cls_meth, clsB):
         #for method in cls_meth.keys():
             #setattr(clsB, method, cls_meth[method])
@@ -27,7 +27,7 @@ def example2(class1, class2):
         
         
 class A:
-    fun_atrr = 100
+    fun_attr = 100
     def fun_a():
         print("class a")
     def fun_a1():
@@ -44,28 +44,13 @@ class C(A):
     pass
         
 
-#example2(A, B)
+example2(A, B) 
 
-example2(C, B) 
+   
+assert hasattr(A, "fun_attr"), "fun_attr was  moved from class A to class B"
+assert hasattr(A, "fun_b"), "fun_b was not moved from class B to class A"
+assert hasattr(A, "fun_b1"), "fun_b1 was not moved from class B to class A"
 
-print("dir C")
-print(dir(C))
-
-print("dict C") 
-print(C.__dict__)
-
-print("dir B")
-print(dir(B)) 
-
-print("dict B") 
-print(B.__dict__)
-
-
-
-print("dir A")
-print(dir(A))       
-
-print("dir B")
-print(dir(B))  
-
-#print(A.fun_b)     
+assert not hasattr(B, "fun_attr"), "class B has fun_attr from class A"
+assert hasattr(B, "fun_a"), "fun_a was not moved from class A to class B"
+assert hasattr(B, "fun_a1"), "fun_a1 was not moved from class A to class B"
