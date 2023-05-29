@@ -4,9 +4,10 @@
 
 def example2(class1, class2):   
    
-    class1_methods = {method : val for (method, val) in class1.__dict__.items() if method.startswith('fun_') and callable(getattr(class1, method))}
-    class2_methods = {method: val for (method, val) in class2.__dict__.items() if method.startswith('fun_') and callable(getattr(class2, method))}
-          
+    class1_methods = {method : val for (method, val) in class1.__dict__.items() if method.startswith('fun_') and callable(val)}
+    class2_methods = {method: val for (method, val) in class2.__dict__.items() if method.startswith('fun_') and callable(val)}
+    
+       
     #def swap_attr(clsA, cls_meth, clsB):
         #for method in cls_meth.keys():
             #setattr(clsB, method, cls_meth[method])
