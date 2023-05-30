@@ -22,7 +22,7 @@ class Number:
 
     def __add__(self, other):
         if isinstance(other, int):
-            return f"{self.val + other} of type int"
+            return self.val + other
         else: 
             return NotImplemented
                 
@@ -33,7 +33,7 @@ class NumberBrother:
         self.val = val
         
       def __radd__(self, other):
-        return f"{self.val + other.val} of type int"
+        return self.val + other.val
        
 
 print(Number(50) + 10)
