@@ -6,36 +6,43 @@
 
 
 class Task6:
-    """all attributes starting with double underscore left untoched"""
+    
     any_name_you_imagine = 100
     
-    aaaa = 333   
-               
+    aaaa = 333  
     
+    __abracadabra = 999
+        
     def fun(self):       
         print ("Hello!")
         
     def __getattribute__(self, name):
-        if name != "__doc__":
+        if not name.startswith('__') or not name.endswith('__'):        
             return object.__getattribute__(self, "fun")
         else:
-            return object.__getattribute__(self, "__doc__")
-    
-    
-        
-    
+            return object.__getattribute__(self, name)    
+            
+   
     
 obj = Task6()
-
-
-print(Task6.__doc__)
+obj.b = 22
 
 print(obj.__doc__)
+print(obj.__dict__)
+
 
 obj.fun()
 
 obj.aaaa()
 
-obj.bb()
+obj.bb__()
+
+obj._b()
+
+obj._b_()
+
+obj.__b_()
 
 obj.any_name_you_imagine()
+
+obj.__abracadabra()
