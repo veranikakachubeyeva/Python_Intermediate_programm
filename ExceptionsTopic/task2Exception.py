@@ -6,12 +6,12 @@ def call_limit_decorator(limit):
     def decorator_func(func):
         calls_counter = 0
 
-        def wrapper():
+        def wrapper(*args, **kwargs):
             nonlocal calls_counter
             if calls_counter >= limit:
                 raise RuntimeError(f"Call limit of {limit} exceeded")
             calls_counter += 1
-            func()
+            return func(*args, **kwargs)
 
         return wrapper
 
@@ -19,13 +19,14 @@ def call_limit_decorator(limit):
 
 
 @call_limit_decorator(5)
-def fun():
+def fun(a):
     print("Hello, world!")
+    return a
     
 
-fun()
-fun()
-fun()
-fun()
-fun()
-fun()
+print(fun(2))
+fun(2)
+fun(2)
+fun(2)
+fun(2)
+fun(2)
