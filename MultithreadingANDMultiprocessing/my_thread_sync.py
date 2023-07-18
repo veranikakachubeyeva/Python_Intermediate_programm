@@ -1,29 +1,27 @@
 import threading
 
-
 lock = threading.Lock()
 
-flag = 1
+current_number = 1
 
 def func_print_even_numbers():
-    global flag
-    for num in range(2, 101, 2):        
-        while not flag == 0:            
-            pass
-        lock.acquire()          
-        print(num)
-        flag = 1
-        lock.release()
+    global current_number
+    while current_number <= 99:
+        with lock:
+            if current_number % 2 == 0:
+                print(current_number)
+                current_number += 1
         
 def func_print_odd_numbers():
-    global flag
-    for num in range(1, 100, 2):
-        while not flag == 1:           
-            pass
-        lock.acquire()          
-        print(num)
-        flag = 0
-        lock.release()
+    global current_number
+    while current_number <= 99:
+        lock.acquire()
+        try:
+            if current_number % 2 == 1:
+                print(current_number)
+                current_number += 1
+        finally:
+            lock.release()
 
 if __name__ == "__main__":
     
