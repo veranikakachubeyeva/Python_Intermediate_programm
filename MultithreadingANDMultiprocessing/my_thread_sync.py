@@ -19,8 +19,7 @@ def print_even_numbers():
         with condition:
             while not predicate(i):
                 condition.wait()
-            print(i)
-            print("//////////")
+            print(i)           
             printed_numbers.add(i)
             condition.notify()
 
@@ -29,8 +28,7 @@ def print_odd_numbers():
         with condition:
             while not predicate(i):
                 condition.wait()
-            print(i)        
-            print("*************")
+            print(i)   
             printed_numbers.add(i)
             condition.notify()
             
