@@ -13,31 +13,23 @@ condition = threading.Condition()
 
 def predicate(i):       
     return i == current_number
+       
 
-def print_even_numbers():
-    global current_number   
-    for i in range(2, max_number + 1, 2):               
-        with condition:
+def print_numbers(start):
+    global current_number    
+    for i in range(start, max_number + 1, 2):               
+       with condition:
             while not predicate(i):
                 condition.wait()
             print(i)             
             current_number = i + 1         
             condition.notify()
-
-def print_odd_numbers(): 
-    global current_number   
-    for i in range(1, max_number + 1, 2):            
-        with condition:
-            while not predicate(i):
-                condition.wait()
-            print(i)                 
-            current_number = i + 1            
-            condition.notify()
-            
+        
+             
 if __name__ == "__main__":        
        
-    t1 = threading.Thread(target=print_odd_numbers)
-    t2 = threading.Thread(target=print_even_numbers)
+    t1 = threading.Thread(target=print_numbers, args=(1,))
+    t2 = threading.Thread(target=print_numbers, args=(2,))
     
     t1.start()
     t2.start()             
