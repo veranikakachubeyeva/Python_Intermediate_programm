@@ -7,29 +7,31 @@
 import threading
 
 max_number = 100
-printed_numbers = set([0])
+current_number = 1
 
 condition = threading.Condition()
 
-def predicate(i):    
-    return i-1 in printed_numbers   
+def predicate(i):       
+    return i == current_number
 
-def print_even_numbers():   
+def print_even_numbers():
+    global current_number   
     for i in range(2, max_number + 1, 2):               
         with condition:
             while not predicate(i):
                 condition.wait()
-            print(i)           
-            printed_numbers.add(i)
+            print(i)             
+            current_number = i + 1         
             condition.notify()
 
-def print_odd_numbers():    
+def print_odd_numbers(): 
+    global current_number   
     for i in range(1, max_number + 1, 2):            
         with condition:
             while not predicate(i):
                 condition.wait()
-            print(i)   
-            printed_numbers.add(i)
+            print(i)                 
+            current_number = i + 1            
             condition.notify()
             
 if __name__ == "__main__":        
