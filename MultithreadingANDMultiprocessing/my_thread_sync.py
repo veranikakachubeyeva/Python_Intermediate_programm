@@ -5,29 +5,37 @@
 # They must print numbers one after another so you will get correct sequence: 
 
 import threading
-import time
 
 max_number = 100
+printed_numbers = set([0])
 
-barrier = threading.Barrier(2)
+condition = threading.Condition()
 
-def print_even_numbers():
+def predicate(i):    
+    return i-1 in printed_numbers   
+
+def print_even_numbers():   
     for i in range(2, max_number + 1, 2):               
-        time.sleep(0.1)
-        barrier.wait()
-        print(i)
-        print("//////////")
+        with condition:
+            while not predicate(i):
+                condition.wait()
+            print(i)
+            print("//////////")
+            printed_numbers.add(i)
+            condition.notify()
 
-def print_odd_numbers():
+def print_odd_numbers():    
     for i in range(1, max_number + 1, 2):            
-        time.sleep(0.2)
-        print(i)        
-        barrier.wait()
-        print("*************") 
-
-
-if __name__ == "__main__":
-    
+        with condition:
+            while not predicate(i):
+                condition.wait()
+            print(i)        
+            print("*************")
+            printed_numbers.add(i)
+            condition.notify()
+            
+if __name__ == "__main__":        
+       
     t1 = threading.Thread(target=print_odd_numbers)
     t2 = threading.Thread(target=print_even_numbers)
     
