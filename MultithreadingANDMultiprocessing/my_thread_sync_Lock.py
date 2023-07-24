@@ -12,23 +12,18 @@ even_lock = threading.Lock()
 odd_lock = threading.Lock()
 odd_lock.acquire()
 
-def func_print_even_numbers():           
-    for num in range(2, 101, 2):             
-        odd_lock.acquire()       
+
+def print_number(start, lock_obg1, lock_obg2):
+    for num in range(start, 101, 2):             
+        lock_obg1.acquire()       
         print(num)        
-        even_lock.release()
+        lock_obg2.release()
 
-
-def func_print_odd_numbers():            
-    for num in range(1, 100, 2):         
-        even_lock.acquire()
-        print(num)                
-        odd_lock.release()
 
 if __name__ == "__main__":    
           
-    t1 = threading.Thread(target=func_print_even_numbers)
-    t2 = threading.Thread(target=func_print_odd_numbers) 
+    t1 = threading.Thread(target=print_number, args=(1, even_lock, odd_lock))
+    t2 = threading.Thread(target=print_number, args=(2, odd_lock, even_lock)) 
  
     t1.start()
     t2.start()
